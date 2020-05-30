@@ -1,15 +1,14 @@
 import plotly.graph_objects as go  # or plotly.express as px
-
-fig = go.Figure()  # or any Plotly Express function e.g. px.bar(...)
-# fig.add_trace( ... )
-# fig.update_layout( ... )
-
+import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
 from tables import onlineShoppingTable
 from tables import actionsTable
+from governmentSatisfaction import govSatisfaction
+
+SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
 
 appTest = dash.Dash(external_stylesheets=[
     "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])
@@ -24,8 +23,10 @@ layout = dict(
     title="Satellite Overview",
 )
 
-appTest.layout = html.Div([html.Div([dcc.Graph(figure=onlineShoppingTable())], className='box1'),
-                           html.Div([dcc.Graph(figure=actionsTable())], className='box1')
+appTest.layout = html.Div([
+    # html.Div([dcc.Graph(figure=onlineShoppingTable())], className='box1'),
+    #                        html.Div([dcc.Graph(figure=actionsTable())], className='box1'),
+                           html.Div([dcc.Graph(figure=govSatisfaction(special_dates=SpecialDates))], className='box1')
                            ])
 
 appTest.run_server(host='127.0.0.1', port='8000', debug=True, use_reloader=False)
