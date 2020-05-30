@@ -9,6 +9,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from tables import onlineShoppingTable
+from tables import actionsTable
 
 appTest = dash.Dash(external_stylesheets=[
     "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])
@@ -23,8 +24,8 @@ layout = dict(
     title="Satellite Overview",
 )
 
-appTest.layout = html.Div([
-    dcc.Graph(figure=onlineShoppingTable())
-],  className='box1')
+appTest.layout = html.Div([html.Div([dcc.Graph(figure=onlineShoppingTable())], className='box1'),
+                           html.Div([dcc.Graph(figure=actionsTable())], className='box1')
+                           ])
 
 appTest.run_server(host='127.0.0.1', port='8000', debug=True, use_reloader=False)
