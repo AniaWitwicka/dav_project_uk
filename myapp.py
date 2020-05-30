@@ -46,13 +46,9 @@ df1us = df1us.sort_values(by=['date'], ascending=False)
 df1pl = df1[df1['location'] == 'Poland']
 df1pl = df1pl.sort_values(by=['date'], ascending=False)
 dfplus = df1pl.append(df1us)
-dates_int = [random.randint(0, 110) for x in range(5)]
 
-special_dates = pd.DataFrame({'event': ['First 100 cases', 'School closed', 'small lockdown', 'General lockdown',
-                                        'The most covid-19 fatalities in Europe '],
-                              'date': [df1uk.date.iloc[x] for x in dates_int],
-                              'value': [df1uk.total_cases.iloc[x] for x in dates_int],
-                              'type': [random.randint(0, 10) for x in range(5)]})
+SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
+
 datadeaths = pd.read_csv('daths.csv', encoding="utf-8")
 
 datadeaths.columns = ['week', 'nocov', 'all', 'cov']
@@ -291,7 +287,7 @@ app.layout = html.Div([
                     date=df1uk.date.max(), style={'background-color': 'red', 'color': 'red'}
                 ),
                     html.Button('Predict', id='predict', n_clicks=0),
-                    dcc.Graph(figure=predict_series(df1uk, str(dt.datetime.now()), special_dates, n=df1uk.shape[0]),
+                    dcc.Graph(figure=predict_series(df1uk, str(dt.datetime.now()), SpecialDates, n=df1uk.shape[0]),
                               id="time_series_graph"),
                 ],
                 # className='mini_container'
@@ -375,7 +371,7 @@ app.layout = html.Div([
     [dash.dependencies.Input('predict', 'n_clicks')],
     [dash.dependencies.State('single-date-picker-range', 'date')])
 def update_output(n_clicks, date):
-    return predict_series(df1uk, date, special_dates)
+    return predict_series(df1uk, date, SpecialDates)
 
 
 @app.callback(
