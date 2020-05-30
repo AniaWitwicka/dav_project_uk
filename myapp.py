@@ -39,7 +39,13 @@ DATA = df1
 
 df1uk = df1[df1['location'] == 'United Kingdom']
 df1uk = df1uk.sort_values(by=['date'], ascending=False)
+# United States
+df1us = df1[df1['location'] == 'United States']
+df1us = df1us.sort_values(by=['date'], ascending=False)
 
+df1pl = df1[df1['location'] == 'Poland']
+df1pl = df1pl.sort_values(by=['date'], ascending=False)
+dfplus = df1pl.append(df1us)
 dates_int = [random.randint(0, 110) for x in range(5)]
 
 special_dates = pd.DataFrame({'event': ['First 100 cases', 'School closed', 'small lockdown', 'General lockdown',
@@ -112,8 +118,9 @@ def mini_plot(df, column):
     return fig
 
 
-def plot_distribution(df):
-    fig = px.bar(df, x='date', y='new_cases')
+def plot_distribution(df, df2, column='new_cases'):
+    df_temp = df.append(df2)
+    fig = px.bar(df_temp, x='date', y=column, color='location', barmode='group')
     fig.update_layout(
         margin=dict(l=10, r=10, t=10, b=10),
         width=400, height=300,
@@ -142,6 +149,7 @@ def deaths_ratio(data):
 
     ])
     # Change the bar mode
+
     fig.update_layout(barmode='stack')
     fig.update_layout(
         margin=dict(l=10, r=10, t=10, b=10),
@@ -293,7 +301,13 @@ app.layout = html.Div([
 
         dbc.Col(
             html.Div(
-                [html.H5("cases - distribution"), dcc.Graph(figure=plot_distribution(df1uk), id="distribution_graph")],
+                [dcc.Dropdown(
+                    id='column-dropdown-distribution',
+                    options=column_dropdown_options(),
+                    value='total_cases_per_million'),
+                    html.H5("cases - distribution"),
+                    html.Button('Show', id='show2', n_clicks=0),
+                    dcc.Graph(figure=plot_distribution(df1uk, dfplus), id="distribution_graph")],
             )
             , width={"size": 3, "offset": 1})],
         className="h-3"
@@ -374,6 +388,17 @@ def update_output1(n_clicks, value):
     return fig
 
 
+@app.callback(dash.dependencies.Output('distribution_graph', 'figure'),
+              [dash.dependencies.Input('show2', 'n_clicks')],
+              [dash.dependencies.State('column-dropdown-distribution', 'value')])
+def update_output1(n_clicks, value):
+    print(value, 'VALUE distribution')
+    fig = plot_distribution(df1uk, dfplus, value)
+    return fig
+
+
+# column-dropdown-distribution
+
 dates = ["2020-02-29", "2020-03-07", "2020-03-15", "2020-03-22", "2020-03-29", "2020-04-04", "2020-04-12", "2020-04-20",
          "2020-04-28", "2020-05-04", "2020-05-06", "2020-05-08", "2020-05-10"]
 
@@ -395,10 +420,12 @@ def changeMap(btn1, btn2, value):
         fig = plot_map_eng(dates[int(format(value))])
     return fig
 
+
 @app.callback(dash.dependencies.Output('pie_graph', 'figure'),
               [dash.dependencies.Input('date_slider2', 'value')])
 def pieChartUpdate(value):
     return pie_plot(dates[int(format(value))])
+
 
 # Main
 if __name__ == "__main__":
