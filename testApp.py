@@ -7,6 +7,7 @@ import dash_html_components as html
 from tables import onlineShoppingTable
 from tables import actionsTable
 from governmentSatisfaction import govSatisfaction
+from levelOfConcern import levelOfConcern
 
 SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
 
@@ -26,7 +27,9 @@ layout = dict(
 appTest.layout = html.Div([
     # html.Div([dcc.Graph(figure=onlineShoppingTable())], className='box1'),
     #                        html.Div([dcc.Graph(figure=actionsTable())], className='box1'),
-                           html.Div([dcc.Graph(figure=govSatisfaction(special_dates=SpecialDates))], className='box1')
-                           ])
+    html.Div([dcc.Graph(figure=govSatisfaction(special_dates=SpecialDates))], className='box1'),
+    html.Div([dcc.Graph(figure=levelOfConcern())], className='box1')
+
+])
 
 appTest.run_server(host='127.0.0.1', port='8000', debug=True, use_reloader=False)
