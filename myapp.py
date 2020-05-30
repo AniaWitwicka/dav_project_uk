@@ -309,11 +309,32 @@ app.layout = html.Div([
         dbc.Col(
             html.Div(
                 [
-                    dcc.Graph(figure=pie_plot(), id="pie_graph")],
-
+                    dcc.Graph(figure=pie_plot(), id="pie_graph"),
+                    dcc.Slider(
+                        id='date_slider2',
+                        min=0,
+                        max=12,
+                        value=2,
+                        marks={
+                            12: {'label': '05-10'},
+                            11: {'label': '05-08'},
+                            10: {'label': '05-06'},
+                            9: {'label': '05-04'},
+                            8: {'label': '04-28'},
+                            7: {'label': '04-28'},
+                            6: {'label': '04-12'},
+                            5: {'label': '04-12'},
+                            4: {'label': '03-29'},
+                            3: {'label': '03-22'},
+                            2: {'label': '03-15'},
+                            1: {'label': '03-07'},
+                            0: {'label': '02-29'},
+                        }
+                    )
+                ]
             ),
             # className='mini_container',
-            width={"size": 1, "offset": 1}
+            width={"size": 3, "offset": 1}
         ),
 
         dbc.Col(
@@ -374,6 +395,10 @@ def changeMap(btn1, btn2, value):
         fig = plot_map_eng(dates[int(format(value))])
     return fig
 
+@app.callback(dash.dependencies.Output('pie_graph', 'figure'),
+              [dash.dependencies.Input('date_slider2', 'value')])
+def pieChartUpdate(value):
+    return pie_plot(dates[int(format(value))])
 
 # Main
 if __name__ == "__main__":
