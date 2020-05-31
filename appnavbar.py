@@ -1,45 +1,28 @@
 # Import required libraries
-import pickle
-import copy
-import pathlib
 import dash
-import math
-import datetime as dt
-from datetime import date, datetime
+from datetime import date
 
-import pandas as pd
-from dash.dependencies import Input, Output, State, ClientsideFunction
+from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
-from dateutil.relativedelta import relativedelta
-import numpy as np
-import random
 
-import plotly.graph_objects as go
 import pandas as pd
-import plotly.express as px
-from fbprophet import Prophet
-import datetime
-from scipy.signal import savgol_filter
-import unidecode
 import dash_bootstrap_components as dbc
 
 from layout_generators import navbar, firstpage, statistics_column, plot_map, plot_map_eng, secondpage, thirdpage
-from pie_plot import pie_plot
-from distribution_plot import general_statistics
-from levelOfConcern import levelOfConcern
-from tables import onlineShoppingTable
-from governmentSatisfaction import govSatisfaction
-from world_map_plot import world_map_plot
-from time_series import predict_series
+from chartScripts.pie_plot import pie_plot
+from chartScripts.levelOfConcern import levelOfConcern
+from chartScripts.governmentSatisfaction import govSatisfaction
+from chartScripts.world_map_plot import world_map_plot
+from chartScripts.time_series import predict_series
 
 app2 = dash.Dash(suppress_callback_exceptions=True, external_stylesheets=[
     "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])
 
-datadeaths = pd.read_csv('daths.csv', encoding="utf-8")
+datadeaths = pd.read_csv('datasets/daths.csv', encoding="utf-8")
 
 datadeaths.columns = ['week', 'nocov', 'all', 'cov']
-SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
+SpecialDates = pd.read_csv('datasets/special_dates.csv', encoding="utf-8")
 '''data'''
 df = pd.read_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
 

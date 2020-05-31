@@ -25,7 +25,7 @@ import unidecode
 import dash_bootstrap_components as dbc 
 
 
-codes = pd.read_csv('countrycodes.csv')
+codes = pd.read_csv('datasets/countrycodes.csv')
 codes.columns = ['Country', 'c1', 'c2', 'num', 'long', 'lat']
 iso_dict = {country: iso.split('"')[1] for country, iso in zip(codes.Country.values, codes.c2.values)}
 

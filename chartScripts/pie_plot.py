@@ -4,8 +4,8 @@ import plotly.graph_objects as go
 
 
 def pie_plot(date='2020 -04-26'):
-    casesDF = pd.read_csv('coronavirus-cases_latest.csv',delimiter=',',encoding='utf-8')
-    deathsDF = pd.read_csv('coronavirus-deaths_latest.csv',delimiter=',',encoding='utf-8')
+    casesDF = pd.read_csv('datasets/coronavirus-cases_latest.csv', delimiter=',', encoding='utf-8')
+    deathsDF = pd.read_csv('datasets/coronavirus-deaths_latest.csv', delimiter=',', encoding='utf-8')
     casesDF = casesDF.rename(columns={"Area name":"AreaName", "Area type": "AreaType", 'Specimen date':"SpecimenDate",
                                       "Cumulative lab-confirmed cases": "CumulativeLabConfirmedCases",
                                       "Previously reported cumulative cases":"PreviouslyReportedCumulativeCases",

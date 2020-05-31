@@ -1,39 +1,25 @@
 # Import required libraries
-import pickle
-import copy
-import pathlib
-import dash
-import math
 import datetime as dt
-from datetime import date, datetime
 
-import pandas as pd
-from dash.dependencies import Input, Output, State, ClientsideFunction
 import dash_core_components as dcc
 import dash_html_components as html
-from dateutil.relativedelta import relativedelta
 import numpy as np
-import random
 
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.express as px
-from fbprophet import Prophet
-import datetime
-from scipy.signal import savgol_filter
 import unidecode
 import dash_bootstrap_components as dbc
-from distribution_plot import general_statistics
-from pie_plot import pie_plot
-from levelOfConcern import levelOfConcern
-from tables import onlineShoppingTable
-from governmentSatisfaction import govSatisfaction
-from world_map_plot import world_map_plot
-from time_series import predict_series
+from chartScripts.distribution_plot import general_statistics
+from chartScripts.levelOfConcern import levelOfConcern
+from chartScripts.tables import onlineShoppingTable
+from chartScripts.governmentSatisfaction import govSatisfaction
+from chartScripts.world_map_plot import world_map_plot
+from chartScripts.time_series import predict_series
 from controls import column_dropdown_options
 
 '''Importing plots'''
-from pie_plot import pie_plot
+from chartScripts.pie_plot import pie_plot
 
 
 '''Navbar features'''
@@ -62,7 +48,7 @@ def statistics_column(df, countries=['France', 'Poland']):
 def plot_map():
     px.set_mapbox_access_token(
         "pk.eyJ1IjoiYXdhcm5vIiwiYSI6ImNrOXB6cHAxZzBmajgzZXFjd2Q1YWI5ODkifQ.b49An9SsEpKsdIv9oy62ug")
-    df = pd.read_csv('codes.csv')
+    df = pd.read_csv('datasets/codes.csv')
     df['cases'] = pd.Series([136873, 4149, 13627, 11468])
     fig = px.scatter_mapbox(df, lat="lat", lon="long",
                             size="cases", size_max=50, zoom=4, hover_name='ctry19nm')
@@ -80,7 +66,7 @@ def plot_map():
 def plot_map_eng(date='cases'):
     px.set_mapbox_access_token(
         "pk.eyJ1IjoiYXdhcm5vIiwiYSI6ImNrOXB6cHAxZzBmajgzZXFjd2Q1YWI5ODkifQ.b49An9SsEpKsdIv9oy62ug")
-    df = pd.read_csv('codesEng.csv')
+    df = pd.read_csv('datasets/codesEng.csv')
     df['cases'] = df[date]
     fig = px.scatter_mapbox(df, lat="lat", lon="long",
                             size="cases", size_max=50, zoom=4, hover_name='ctry19nm')

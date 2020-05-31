@@ -1,15 +1,12 @@
-import plotly.graph_objects as go  # or plotly.express as px
 import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 
-from tables import onlineShoppingTable
-from tables import actionsTable
-from governmentSatisfaction import govSatisfaction
-from levelOfConcern import levelOfConcern
+from chartScripts.governmentSatisfaction import govSatisfaction
+from chartScripts.levelOfConcern import levelOfConcern
 
-SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
+SpecialDates = pd.read_csv('datasets/special_dates.csv', encoding="utf-8")
 
 appTest = dash.Dash(external_stylesheets=[
     "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])

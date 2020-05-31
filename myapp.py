@@ -1,34 +1,24 @@
 # Import required libraries
-import pickle
-import copy
-import pathlib
 import dash
-import math
 import datetime as dt
-from datetime import date, datetime
+from datetime import date
 
-import pandas as pd
-from dash.dependencies import Input, Output, State, ClientsideFunction
+from dash.dependencies import Input
 import dash_core_components as dcc
 import dash_html_components as html
-from dateutil.relativedelta import relativedelta
 import numpy as np
-import random
 
 import plotly.graph_objects as go
 import pandas as pd
 import plotly.express as px
-from fbprophet import Prophet
-import datetime
-from scipy.signal import savgol_filter
 import unidecode
 import dash_bootstrap_components as dbc
 
 # Multi-dropdown options
 from controls import column_dropdown_options
-from pie_plot import pie_plot
-from world_map_plot import world_map_plot
-from time_series import predict_series
+from chartScripts.pie_plot import pie_plot
+from chartScripts.world_map_plot import world_map_plot
+from chartScripts.time_series import predict_series
 
 app = dash.Dash(external_stylesheets=[
     "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])
@@ -47,9 +37,9 @@ df1pl = df1[df1['location'] == 'Poland']
 df1pl = df1pl.sort_values(by=['date'], ascending=False)
 dfplus = df1pl.append(df1us)
 
-SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
+SpecialDates = pd.read_csv('datasets/special_dates.csv', encoding="utf-8")
 
-datadeaths = pd.read_csv('daths.csv', encoding="utf-8")
+datadeaths = pd.read_csv('datasets/daths.csv', encoding="utf-8")
 
 datadeaths.columns = ['week', 'nocov', 'all', 'cov']
 
@@ -57,7 +47,7 @@ datadeaths.columns = ['week', 'nocov', 'all', 'cov']
 def plot_map():
     px.set_mapbox_access_token(
         "pk.eyJ1IjoiYXdhcm5vIiwiYSI6ImNrOXB6cHAxZzBmajgzZXFjd2Q1YWI5ODkifQ.b49An9SsEpKsdIv9oy62ug")
-    df = pd.read_csv('codes.csv')
+    df = pd.read_csv('datasets/codes.csv')
     df['cases'] = pd.Series([136873, 4149, 13627, 11468])
     fig = px.scatter_mapbox(df, lat="lat", lon="long",
                             size="cases", size_max=50, zoom=4, hover_name='ctry19nm')
@@ -75,7 +65,7 @@ def plot_map():
 def plot_map_eng(date='cases'):
     px.set_mapbox_access_token(
         "pk.eyJ1IjoiYXdhcm5vIiwiYSI6ImNrOXB6cHAxZzBmajgzZXFjd2Q1YWI5ODkifQ.b49An9SsEpKsdIv9oy62ug")
-    df = pd.read_csv('codesEng.csv')
+    df = pd.read_csv('datasets/codesEng.csv')
     df['cases'] = df[date]
     fig = px.scatter_mapbox(df, lat="lat", lon="long",
                             size="cases", size_max=50, zoom=4, hover_name='ctry19nm')

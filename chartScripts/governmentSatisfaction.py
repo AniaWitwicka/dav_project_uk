@@ -4,8 +4,8 @@ import plotly.express as px
 import pandas as pd
 
 def govSatisfaction():
-    special_dates = pd.read_csv('special_dates.csv', encoding="utf-8")
-    df_gov = pd.read_csv("govSatisfaction.csv", encoding="utf-8")
+    special_dates = pd.read_csv('datasets/special_dates.csv', encoding="utf-8")
+    df_gov = pd.read_csv("datasets/govSatisfaction.csv", encoding="utf-8")
     df_gov = df_gov.iloc[:-4:4]
     fig = go.Figure(data=[
         go.Bar(name='Germany', x=df_gov["date"], y=df_gov["Germany"], opacity=0.85),

@@ -6,7 +6,7 @@ import re
 
 
 def onlineShoppingTable():
-    df_online = pd.read_csv("online_shopping.csv", encoding="utf-8")
+    df_online = pd.read_csv("datasets/online_shopping.csv", encoding="utf-8")
     df_online = df_online.round()
 
     fig = make_subplots(
@@ -83,7 +83,7 @@ def onlineShoppingTable():
 
 
 def actionsTable():
-    df_online = pd.read_csv("action_during_covid.csv", encoding="utf-8")
+    df_online = pd.read_csv("datasets/action_during_covid.csv", encoding="utf-8")
 
     fig = make_subplots(
         rows=3, cols=1,

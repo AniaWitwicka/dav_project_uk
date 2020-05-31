@@ -1,34 +1,9 @@
 # Import required libraries
-import pickle
-import copy
-import pathlib
-import dash
-import math
-import datetime as dt
-from datetime import date, datetime
 
-import pandas as pd
-from dash.dependencies import Input, Output, State, ClientsideFunction
-import dash_core_components as dcc
-import dash_html_components as html
-from dateutil.relativedelta import relativedelta
-import numpy as np
-import random
-
-import plotly.graph_objects as go
-import pandas as pd
 import plotly.express as px
-from fbprophet import Prophet
-import datetime
-from scipy.signal import savgol_filter
-import unidecode
-import dash_bootstrap_components as dbc
+
 
 # Multi-dropdown options
-from controls import column_dropdown_options
-from pie_plot import pie_plot
-from world_map_plot import world_map_plot
-from time_series import predict_series
 
 
 def change_layout(fig, hidexax=True, name='new_cases'):
