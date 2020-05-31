@@ -39,14 +39,16 @@ DATA = df1
 
 df1uk = df1[df1['location'] == 'United Kingdom']
 df1uk = df1uk.sort_values(by=['date'], ascending=False)
+# United States
+df1us = df1[df1['location'] == 'United States']
+df1us = df1us.sort_values(by=['date'], ascending=False)
 
-dates_int = [random.randint(0, 110) for x in range(5)]
+df1pl = df1[df1['location'] == 'Poland']
+df1pl = df1pl.sort_values(by=['date'], ascending=False)
+dfplus = df1pl.append(df1us)
 
-special_dates = pd.DataFrame({'event': ['First 100 cases', 'School closed', 'small lockdown', 'General lockdown',
-                                        'The most covid-19 fatalities in Europe '],
-                              'date': [df1uk.date.iloc[x] for x in dates_int],
-                              'value': [df1uk.total_cases.iloc[x] for x in dates_int],
-                              'type': [random.randint(0, 10) for x in range(5)]})
+SpecialDates = pd.read_csv('special_dates.csv', encoding="utf-8")
+
 datadeaths = pd.read_csv('daths.csv', encoding="utf-8")
 
 datadeaths.columns = ['week', 'nocov', 'all', 'cov']
@@ -92,7 +94,7 @@ def mini_plot(df, column):
     fig = px.bar(df, x='date', y=column, labels={'date': '', column: ''})
     # fig.add_trace(go.Scatter(x=df['date'], y=df[column], mode='lines'))
     fig.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=0, r=0, t=20, b=0),
         width=100, height=50,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
@@ -112,8 +114,9 @@ def mini_plot(df, column):
     return fig
 
 
-def plot_distribution(df):
-    fig = px.bar(df, x='date', y='new_cases')
+def plot_distribution(df, df2, column='new_cases'):
+    df_temp = df.append(df2)
+    fig = px.bar(df_temp, x='date', y=column, color='location', barmode='group')
     fig.update_layout(
         margin=dict(l=10, r=10, t=10, b=10),
         width=400, height=300,
@@ -142,6 +145,7 @@ def deaths_ratio(data):
 
     ])
     # Change the bar mode
+
     fig.update_layout(barmode='stack')
     fig.update_layout(
         margin=dict(l=10, r=10, t=10, b=10),
@@ -283,7 +287,7 @@ app.layout = html.Div([
                     date=df1uk.date.max(), style={'background-color': 'red', 'color': 'red'}
                 ),
                     html.Button('Predict', id='predict', n_clicks=0),
-                    dcc.Graph(figure=predict_series(df1uk, str(dt.datetime.now()), special_dates, n=df1uk.shape[0]),
+                    dcc.Graph(figure=predict_series(df1uk, str(dt.datetime.now()), SpecialDates, n=df1uk.shape[0]),
                               id="time_series_graph"),
                 ],
                 # className='mini_container'
@@ -293,7 +297,13 @@ app.layout = html.Div([
 
         dbc.Col(
             html.Div(
-                [html.H5("cases - distribution"), dcc.Graph(figure=plot_distribution(df1uk), id="distribution_graph")],
+                [dcc.Dropdown(
+                    id='column-dropdown-distribution',
+                    options=column_dropdown_options(),
+                    value='total_cases_per_million'),
+                    html.H5("cases - distribution"),
+                    html.Button('Show', id='show2', n_clicks=0),
+                    dcc.Graph(figure=plot_distribution(df1uk, dfplus), id="distribution_graph")],
             )
             , width={"size": 3, "offset": 1})],
         className="h-3"
@@ -309,11 +319,32 @@ app.layout = html.Div([
         dbc.Col(
             html.Div(
                 [
-                    dcc.Graph(figure=pie_plot(), id="pie_graph")],
-
+                    dcc.Graph(figure=pie_plot(), id="pie_graph"),
+                    dcc.Slider(
+                        id='date_slider2',
+                        min=0,
+                        max=12,
+                        value=2,
+                        marks={
+                            12: {'label': '05-10'},
+                            11: {'label': '05-08'},
+                            10: {'label': '05-06'},
+                            9: {'label': '05-04'},
+                            8: {'label': '04-28'},
+                            7: {'label': '04-28'},
+                            6: {'label': '04-12'},
+                            5: {'label': '04-12'},
+                            4: {'label': '03-29'},
+                            3: {'label': '03-22'},
+                            2: {'label': '03-15'},
+                            1: {'label': '03-07'},
+                            0: {'label': '02-29'},
+                        }
+                    )
+                ]
             ),
             # className='mini_container',
-            width={"size": 1, "offset": 1}
+            width={"size": 3, "offset": 1}
         ),
 
         dbc.Col(
@@ -340,7 +371,7 @@ app.layout = html.Div([
     [dash.dependencies.Input('predict', 'n_clicks')],
     [dash.dependencies.State('single-date-picker-range', 'date')])
 def update_output(n_clicks, date):
-    return predict_series(df1uk, date, special_dates)
+    return predict_series(df1uk, date, SpecialDates)
 
 
 @app.callback(
@@ -352,6 +383,17 @@ def update_output1(n_clicks, value):
     fig = world_map_plot(value, df1)
     return fig
 
+
+@app.callback(dash.dependencies.Output('distribution_graph', 'figure'),
+              [dash.dependencies.Input('show2', 'n_clicks')],
+              [dash.dependencies.State('column-dropdown-distribution', 'value')])
+def update_output1(n_clicks, value):
+    print(value, 'VALUE distribution')
+    fig = plot_distribution(df1uk, dfplus, value)
+    return fig
+
+
+# column-dropdown-distribution
 
 dates = ["2020-02-29", "2020-03-07", "2020-03-15", "2020-03-22", "2020-03-29", "2020-04-04", "2020-04-12", "2020-04-20",
          "2020-04-28", "2020-05-04", "2020-05-06", "2020-05-08", "2020-05-10"]
@@ -373,6 +415,12 @@ def changeMap(btn1, btn2, value):
         print(changed_id)
         fig = plot_map_eng(dates[int(format(value))])
     return fig
+
+
+@app.callback(dash.dependencies.Output('pie_graph', 'figure'),
+              [dash.dependencies.Input('date_slider2', 'value')])
+def pieChartUpdate(value):
+    return pie_plot(dates[int(format(value))])
 
 
 # Main

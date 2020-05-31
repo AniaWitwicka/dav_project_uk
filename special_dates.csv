@@ -1,0 +1,13 @@
+,event,date,value,type
+0,the biggest one-day increase,2020-03-04,51,10
+1,10 deaths in UK,2020-03-10,321,4
+2,school closing announcement,2020-03-18,1950,9
+3,"school closing / pub, bars, restaurants closing",2020-03-20,3277,8
+4,Prince Charles tests positive for the coronavirus,2020-03-25,8077,3
+5,The number of worldwide coronavirus cases passes one million. ,2020-04-02,33718,6
+6,highest daily death toll at 938 deaths recorded in 24 hours,2020-04-09,143464,6
+7,Confirmed COVID-19 infections globally passes 2 million,2020-04-15,93873,2
+8,"Worldwide COVID-19 deaths reach 200,000",2020-04-25,143464,8
+9,Confirmed COVID-19 cases worldwide pass 4 million,2020-05-10,215260,4
+10,COVID-19 cases worldwide passes 5 million,2020-05-21,248293,7
+11,England to launch ‘test and trace’ system aimed at replacing lockdown restrictions,2020-05-27,265227,0
