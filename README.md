@@ -59,10 +59,11 @@ Two analysis were conducted. Model for total cases
 ![Test Image 1](readmeimages/3.png)
 
 ### Installations
-Steps to ryn the app:
+Steps to run the app:
 
 ```bash
-git clone https://github.com/AniaWitwicka/dav_project_uk/tree/master
+git clone https://github.com/AniaWitwicka/dav_project_uk
+cd dav_project_uk
 pip install -r requirements.txt
 python appnavbar.py 
 ```
