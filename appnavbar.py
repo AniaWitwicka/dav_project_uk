@@ -260,4 +260,4 @@ def change_button_style(time1, time2, time3):
         return white_button_style
 
 if __name__ == "__main__":
-    app2.run_server(host='127.0.0.1', port='8000', debug=True)
+    app2.server.run(debug=True, threaded=True)
