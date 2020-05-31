@@ -52,6 +52,7 @@ def check_validity(country, column, df):
 
 def world_map_plot(column, data):
     ukcurve = np.array(check_validity('United Kingdom', column, data)[1][column].tolist())
+    ukcurve = savgol_filter(ukcurve, 5, 3)
     distances_from_uk_deaths = {}
     countries_list = data['location'].value_counts()
     countries_list = set(countries_list.index)
@@ -78,9 +79,11 @@ def world_map_plot(column, data):
     fig = go.Figure(data=go.Choropleth(
     locations=df['iso'], # Spatial coordinates
     z = df['value'], # Data to be color-coded
-    colorscale = 'blues',
+    colorscale = 'reds',
     reversescale=True,
     colorbar_title = "UK-distance",
+    zmax=abs(df['value'].max()) * 0.4,
+    zmin = 0,
     text=df["country"],
     ))
 

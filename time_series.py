@@ -94,10 +94,12 @@ def predict_series(df, date, special_dates, n=100):
                                    datetime.datetime(2020, 6, 1)],
                       xaxis={'type': 'date'},
                       )
-
+    fig.update_xaxes(title_text="Date")
+    fig.update_yaxes(title_text="Total cases")
     fig.update_layout(hovermode='x unified')
     fig.update_layout(
         height=600,
+
         margin=dict(l=10, r=10, t=50, b=30),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
