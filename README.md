@@ -41,7 +41,7 @@ consumers behaviours in UK.
 
 ![Test Image 1](readmeimages/2.png)
 
-###Analytics
+### Analytics
 Two analysis were conducted. Model for total cases
  prediction basing on RMSE was prepared (Prophet). User can 
  choose a date from calendar and see the model prediction 
