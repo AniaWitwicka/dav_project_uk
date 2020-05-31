@@ -3,17 +3,20 @@ from plotly.subplots import make_subplots
 import plotly.express as px
 import pandas as pd
 
-def govSatisfaction(special_dates):
-    df_gov = pd.read_csv("govSatisfaction.csv", encoding="utf-8")
+def govSatisfaction():
+    special_dates = pd.read_csv('datasets/special_dates.csv', encoding="utf-8")
+    df_gov = pd.read_csv("datasets/govSatisfaction.csv", encoding="utf-8")
+    df_gov = df_gov.iloc[:-4:4]
     fig = go.Figure(data=[
         go.Bar(name='Germany', x=df_gov["date"], y=df_gov["Germany"], opacity=0.85),
-        go.Bar(name='USA', x=df_gov["date"], y=df_gov["United States"], opacity=0.85),
+        #go.Bar(name='USA', x=df_gov["date"], y=df_gov["United States"], opacity=0.85),
         go.Bar(name='United Kingdom', x=df_gov["date"], y=df_gov["United Kingdom"], opacity=0.85),
     ])
     fig.update_layout(
-        height=1000,
         showlegend=True,
-        title_text="Satisfaction with the national government's response to the COVID-19 / coronavirus pandemic in the United States, United Kingdom and Germany 2020 (as of May 24)",
+        margin=dict(l=0, r=0, t=30, b=0),
+        height=400,
+        title_text="Satisfaction with the national government's response to the COVID-19 (May 24)",
         # margin=dict(l=10, r=0, t=0, b=0),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',

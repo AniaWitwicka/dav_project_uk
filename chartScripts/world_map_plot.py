@@ -25,7 +25,7 @@ import unidecode
 import dash_bootstrap_components as dbc 
 
 
-codes = pd.read_csv('countrycodes.csv')
+codes = pd.read_csv('datasets/countrycodes.csv')
 codes.columns = ['Country', 'c1', 'c2', 'num', 'long', 'lat']
 iso_dict = {country: iso.split('"')[1] for country, iso in zip(codes.Country.values, codes.c2.values)}
 
@@ -52,6 +52,7 @@ def check_validity(country, column, df):
 
 def world_map_plot(column, data):
     ukcurve = np.array(check_validity('United Kingdom', column, data)[1][column].tolist())
+    ukcurve = savgol_filter(ukcurve, 5, 3)
     distances_from_uk_deaths = {}
     countries_list = data['location'].value_counts()
     countries_list = set(countries_list.index)
@@ -78,14 +79,16 @@ def world_map_plot(column, data):
     fig = go.Figure(data=go.Choropleth(
     locations=df['iso'], # Spatial coordinates
     z = df['value'], # Data to be color-coded
-    colorscale = 'blues',
+    colorscale = 'reds',
     reversescale=True,
     colorbar_title = "UK-distance",
+    zmax=abs(df['value'].max()) * 0.4,
+    zmin = 0,
     text=df["country"],
     ))
 
     fig.update_layout(
-        title="Closeness to UK by the distribution (RMSE) of <br> " + column.replace('_', ' ') + 'last 20 days',
+        title="Closeness to UK by the distribution (RMSE) of <br> " + column.replace('_', ' ') + ' last 20 days',
 
     )
     fig.update_geos(
@@ -110,7 +113,8 @@ def world_map_plot(column, data):
 
     fig.update_layout(
         margin=dict(l=10, r=10, t=50, b=30),
-        width=500, height=300,
+        #width=500, 
+        height=600,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
     font=dict(
