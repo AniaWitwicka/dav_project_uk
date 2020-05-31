@@ -14,14 +14,17 @@ def pie_plot(date='2020 -04-26'):
     localDF = casesDF[casesDF.AreaType == "Region"]
     localDF['SpecimenDate'] = localDF['SpecimenDate'].astype('datetime64[ns]')
     # 2020-04-26
-    colors = ['#92a8d1','#6585c2' , '#034f84', '#023a61' , '#f7cac9', '#d19e9d' , '#f7786b', '#f7786b', '#cf4436']
+    colors = ['#6c7991','#6585c2' , '#034f84', '#023a61' , '#f7cac9', '#d19e9d' , '#a14940', '#f7786b', '#cf4436']
 
     #fig = px.pie(localDF[localDF.SpecimenDate == '2020 -04-26'], values='CumulativeLabConfirmedCases', names='AreaName', title='Percentage of cases in Regions of UK on 2020-04-26')
+    labels = localDF[localDF.SpecimenDate == date]['AreaName'].values
+    casessum = localDF[localDF.SpecimenDate == date]['CumulativeLabConfirmedCases'].values.sum()
+    values = [round((x / casessum) * 100) for x in localDF[localDF.SpecimenDate == date]['CumulativeLabConfirmedCases'].values]
+    
+    fig = go.Figure(data=[go.Pie(labels=labels,
+                             values=values)])
 
-    fig = go.Figure(data=[go.Pie(labels=localDF[localDF.SpecimenDate == date]['AreaName'].values,
-                             values=localDF[localDF.SpecimenDate == date]['CumulativeLabConfirmedCases'].values)])
-
-    fig.update_traces(hoverinfo='label+percent', textinfo='value', textfont_size=8, hole=.3,
+    fig.update_traces(hoverinfo='label+percent', textinfo='percent', textfont_size=8, hole=.3,
                    marker=dict(colors=colors, line=dict(color='#17191a', width=3)))
 
     fig.update_layout(

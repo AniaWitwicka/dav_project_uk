@@ -31,16 +31,16 @@ from world_map_plot import world_map_plot
 from time_series import predict_series
 
 
-def change_layout(fig, hidexax=True):
+def change_layout(fig, hidexax=True, name='new_cases'):
     if hidexax:
         xlabel = ''
     else:
         xlabel = 'date'
     fig.update_layout(
         margin=dict(l=0, r=0, t=30, b=0),
-        title='new cases',
+        title=name.split('_')[0] + ' ' + name.split('_')[1],
         xaxis_title=xlabel,
-        yaxis_title="cases",
+        yaxis_title=name.split('_')[0] + ' ' + name.split('_')[1] ,
         width=500,
         height=150,
         paper_bgcolor='rgba(0,0,0,0)',
@@ -71,16 +71,16 @@ def general_statistics(df, countries=['France', 'Poland']):
     df_temp = df_temp[df_temp['total_cases'] > 0]
 
     fig1 = px.bar(df_temp, x='date', y='new_cases', color='location', opacity=0.7)
-    fig1 = change_layout(fig1)
+    fig1 = change_layout(fig1, name='new_cases')
 
     fig2 = px.line(df_temp, x='date', y='total_cases', color='location')
-    fig2 = change_layout(fig2)
+    fig2 = change_layout(fig2, name='total_cases')
 
     fig3 = px.bar(df_temp, x='date', y='new_deaths', color='location')
-    fig3 = change_layout(fig3)
+    fig3 = change_layout(fig3, name='new_deaths')
 
     fig4 = px.line(df_temp, x='date', y='total_deaths', color='location')
-    fig4 = change_layout(fig4, hidexax=False)
+    fig4 = change_layout(fig4, hidexax=False, name='total_deaths')
 
     return [fig1, fig2, fig3, fig4]
     

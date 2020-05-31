@@ -20,7 +20,7 @@ def onlineShoppingTable():
         go.Bar(
             x=df_online["Category"],
             y=df_online["United Kingdom"],
-            name="Shifting to online shopping in UK",
+            name="Shifting to online shopping in UK (%)",
             opacity=0.85
         ),
         row=1, col=2
@@ -36,6 +36,8 @@ def onlineShoppingTable():
     #     row=2, col=1
     # )
 
+    df_online['Germany'] = [str(int(float(x.split('%')[0]))) + '%' for x in df_online['Germany'].values]
+    df_online["United Kingdom"] = [str(int(float(x.split('%')[0]))) + '%' for x in df_online["United Kingdom"].values]
     fig.add_trace(
         go.Table(
             header=dict(

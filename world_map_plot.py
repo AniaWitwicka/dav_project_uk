@@ -88,7 +88,7 @@ def world_map_plot(column, data):
     ))
 
     fig.update_layout(
-        title="Closeness to UK by the distribution (RMSE) of <br> " + column.replace('_', ' ') + 'last 20 days',
+        title="Closeness to UK by the distribution (RMSE) of <br> " + column.replace('_', ' ') + ' last 20 days',
 
     )
     fig.update_geos(

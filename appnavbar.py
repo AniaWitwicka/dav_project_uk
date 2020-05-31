@@ -209,5 +209,72 @@ def update_output1(n_clicks, value):
     fig = world_map_plot(value, df1)
     return fig
 
+
+white_button_style = {'background-color': 'transparent'}
+
+red_button_style = {'background-color': '#76b4e3'}
+
+#
+@app2.callback(Output('navbar0', 'style'),
+              [Input('navbar0', 'n_clicks_timestamp'), Input('navbar1', 'n_clicks_timestamp'), Input('navbar2', 'n_clicks_timestamp')])
+def change_button_style(time1, time2, time3):
+    if not time1 and not time2 and not time3:
+        return red_button_style
+    if not time1:
+        time1 = 0
+    if not time2:
+        time2 = 0
+    if not time3:
+        time3 = 0
+
+    if time1 > time2 and time1 > time3:
+
+        return red_button_style
+
+    else:
+
+        return white_button_style
+#
+@app2.callback(Output('navbar1', 'style'),
+              [Input('navbar0', 'n_clicks_timestamp'), Input('navbar1', 'n_clicks_timestamp'), Input('navbar2', 'n_clicks_timestamp')])
+def change_button_style(time1, time2, time3):
+    if not time1 and not time2 and not time3:
+        raise dash.exceptions.PreventUpdate
+    if not time1:
+        time1 = 0
+    if not time2:
+        time2 = 0
+    if not time3:
+        time3 = 0
+
+    if time2 > time3 and time2 > time1:
+
+        return red_button_style
+
+    else:
+
+        return white_button_style
+
+@app2.callback(Output('navbar2', 'style'),
+               [Input('navbar0', 'n_clicks_timestamp'), Input('navbar1', 'n_clicks_timestamp'),
+                Input('navbar2', 'n_clicks_timestamp')])
+def change_button_style(time1, time2, time3):
+    if not time1 and not time2 and not time3:
+        raise dash.exceptions.PreventUpdate
+    if not time1:
+        time1 = 0
+    if not time2:
+        time2 = 0
+    if not time3:
+        time3 = 0
+
+    if time3 > time2 and time3 > time1:
+
+        return red_button_style
+
+    else:
+
+        return white_button_style
+
 if __name__ == "__main__":
     app2.run_server(host='127.0.0.1', port='8000', debug=True)
