@@ -16,7 +16,7 @@ from chartScripts.tables import onlineShoppingTable
 from chartScripts.governmentSatisfaction import govSatisfaction
 from chartScripts.world_map_plot import world_map_plot
 from chartScripts.time_series import predict_series
-from controls import column_dropdown_options
+from appManager.controls import column_dropdown_options
 
 '''Importing plots'''
 from chartScripts.pie_plot import pie_plot

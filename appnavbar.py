@@ -9,7 +9,7 @@ import dash_html_components as html
 import pandas as pd
 import dash_bootstrap_components as dbc
 
-from layout_generators import navbar, firstpage, statistics_column, plot_map, plot_map_eng, secondpage, thirdpage
+from appManager.layout_generators import navbar, firstpage, statistics_column, plot_map, plot_map_eng, secondpage, thirdpage
 from chartScripts.pie_plot import pie_plot
 from chartScripts.levelOfConcern import levelOfConcern
 from chartScripts.governmentSatisfaction import govSatisfaction
