@@ -97,8 +97,8 @@ def predict_series(df, date, special_dates, n=100):
 
     fig.update_layout(hovermode='x unified')
     fig.update_layout(
+        height=600,
         margin=dict(l=10, r=10, t=50, b=30),
-        width=600, height=350,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
     font=dict(

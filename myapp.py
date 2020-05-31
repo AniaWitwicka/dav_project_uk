@@ -94,7 +94,7 @@ def mini_plot(df, column):
     fig = px.bar(df, x='date', y=column, labels={'date': '', column: ''})
     # fig.add_trace(go.Scatter(x=df['date'], y=df[column], mode='lines'))
     fig.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=0, r=0, t=20, b=0),
         width=100, height=50,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',

@@ -7,14 +7,13 @@ import re
 
 def onlineShoppingTable():
     df_online = pd.read_csv("online_shopping.csv", encoding="utf-8")
+    df_online = df_online.round()
 
     fig = make_subplots(
-        rows=3, cols=1,
-        shared_xaxes=True,
+        rows=1, cols=2,
         vertical_spacing=0.03,
-        specs=[[{"type": "table"}],
-               [{"type": "bar"}],
-               [{"type": "bar"}]]
+        specs=[[{"type": "table"}, {"type": "bar"}]],
+        subplot_titles=['', 'Shifting to online shopping in UK']
     )
 
     fig.add_trace(
@@ -24,23 +23,23 @@ def onlineShoppingTable():
             name="Shifting to online shopping in UK",
             opacity=0.85
         ),
-        row=3, col=1
+        row=1, col=2
     )
 
-    fig.add_trace(
-        go.Bar(
-            x=df_online["Category"],
-            y=df_online["United States"],
-            name="Shifting to online shopping in USA",
-            opacity=0.85
-        ),
-        row=2, col=1
-    )
+    # fig.add_trace(
+    #     go.Bar(
+    #         x=df_online["Category"],
+    #         y=df_online["United States"],
+    #         name="Shifting to online shopping in USA",
+    #         opacity=0.85
+    #     ),
+    #     row=2, col=1
+    # )
 
     fig.add_trace(
         go.Table(
             header=dict(
-                values=["Category", "Germany", "United Kingdom", "United States"],
+                values=["Category", "Germany", "UK"],
                 font=dict(family="Courier New, monospace",
                           size=16,
                           color="white"),
@@ -49,10 +48,10 @@ def onlineShoppingTable():
                 fill_color='rgb(75, 92, 162 )',
             ),
             cells=dict(
-                values=[df_online[k].tolist() for k in df_online.columns[0:]],
+                values=[df_online[k].tolist() for k in df_online.columns[0:-1]],
                 align="left",
                 font=dict(family="Courier New, monospace",
-                          size=12,
+                          size=10,
                           color="white"),
                 line_color='white',
                 fill_color='rgb(132, 154, 166)',
@@ -61,8 +60,8 @@ def onlineShoppingTable():
         row=1, col=1
     )
     fig.update_layout(
-        height=1000,
-        showlegend=True,
+        height=700,
+        showlegend=False,
         title_text="Shifting to online shopping due to covid-19 closures",
     )
     fig.update_layout(
@@ -137,7 +136,6 @@ def actionsTable():
         row=1, col=1
     )
     fig.update_layout(
-        height=1000,
         showlegend=True,
         title_text="Experiences and actions taken due to the COVID-19",
     )

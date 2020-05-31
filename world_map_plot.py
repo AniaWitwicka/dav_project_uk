@@ -110,7 +110,8 @@ def world_map_plot(column, data):
 
     fig.update_layout(
         margin=dict(l=10, r=10, t=50, b=30),
-        width=500, height=300,
+        #width=500, 
+        height=600,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
     font=dict(
