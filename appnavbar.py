@@ -17,7 +17,9 @@ from chartScripts.world_map_plot import world_map_plot
 from chartScripts.time_series import predict_series
 
 app2 = dash.Dash(suppress_callback_exceptions=True, external_stylesheets=[
-    "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css",
+    "https://codepen.io/chriddyp/pen/bWLwgP.css",
+     "https://codepen.io/chriddyp/pen/brPBPO.css"])
 
 datadeaths = pd.read_csv('datasets/daths.csv', encoding="utf-8")
 
