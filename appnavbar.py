@@ -1,6 +1,6 @@
 # Import required libraries
 import dash
-from datetime import date
+from datetime import datetime, timedelta, date
 
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
@@ -17,7 +17,9 @@ from chartScripts.world_map_plot import world_map_plot
 from chartScripts.time_series import predict_series
 
 app2 = dash.Dash(suppress_callback_exceptions=True, external_stylesheets=[
-    "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css"])
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap-grid.min.css",
+    "https://codepen.io/chriddyp/pen/bWLwgP.css",
+     "https://codepen.io/chriddyp/pen/brPBPO.css"])
 
 datadeaths = pd.read_csv('datasets/daths.csv', encoding="utf-8")
 
@@ -55,7 +57,7 @@ app2.layout = html.Div([
                     dbc.Row(
                         [
                             dbc.Row(html.H2(
-                                "Coronavirus - UK " + '(' + str(date.today()) + ')',
+                                "Coronavirus - UK " + '(' + str(date.today() - timedelta(days=1)) + ')',
                             ),
                             ),
                         ]
@@ -260,4 +262,5 @@ def change_button_style(time1, time2, time3):
         return white_button_style
 
 if __name__ == "__main__":
-    app2.server.run(debug=True, threaded=True)
+    app2.run_server(host='127.0.0.1', port='8000', debug=True)
+
