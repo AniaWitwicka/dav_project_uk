@@ -24,9 +24,9 @@ datadeaths = pd.read_csv('datasets/daths.csv', encoding="utf-8")
 datadeaths.columns = ['week', 'nocov', 'all', 'cov']
 SpecialDates = pd.read_csv('datasets/special_dates.csv', encoding="utf-8")
 '''data'''
-df = pd.read_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
+df = pd.read_csv('datasets/owid-covid-data.csv')
 
-df1 = pd.read_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
+df1 = pd.read_csv('datasets/owid-covid-data.csv')
 df1['date'] = pd.to_datetime(df1['date'])
 DATA = df1
 

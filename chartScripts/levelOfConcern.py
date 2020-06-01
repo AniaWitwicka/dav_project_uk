@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def levelOfConcern(mode='total_cases'):
-    df1 = pd.read_csv('https://covid.ourworldindata.org/data/owid-covid-data.csv')
+    df1 = pd.read_csv('datasets/owid-covid-data.csv')
     df1['date'] = pd.to_datetime(df1['date'])
     df1uk = df1[df1['location'] == 'United Kingdom']
     #df1uk = df1uk.iloc[:-4:4]
