@@ -28,8 +28,8 @@ def pie_plot(date='2020 -04-26'):
                    marker=dict(colors=colors, line=dict(color='#17191a', width=3)))
 
     fig.update_layout(
-        margin=dict(l=0, r=0, t=0, b=0),
-        width=300, height=600,
+        margin=dict(l=20, r=20, t=50, b=50),
+        #width=300, height=600,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         font=dict(

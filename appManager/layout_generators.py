@@ -119,7 +119,7 @@ def first_page_second_column():
         html.H6('Cases by region'),
         html.Div(
             [
-                dcc.Graph(figure=pie_plot(), id="pie_graph"),
+                dcc.Graph(figure=pie_plot(), id="pie_graph", style={"height": 600}),
                 dcc.Slider(
                     id='date_slider2',
                     min=0,
@@ -134,7 +134,7 @@ def first_page_second_column():
                     }
                 )
             ]
-        )], className='box1')], width=3
+        )], style={"align": 'center'}, className='box1')], width=2
     )
     return col
 
