@@ -1,6 +1,6 @@
 # Import required libraries
 import dash
-from datetime import date
+from datetime import datetime, timedelta, date
 
 from dash.dependencies import Input, Output
 import dash_core_components as dcc
@@ -55,7 +55,7 @@ app2.layout = html.Div([
                     dbc.Row(
                         [
                             dbc.Row(html.H2(
-                                "Coronavirus - UK " + '(' + str(date.today()) + ')',
+                                "Coronavirus - UK " + '(' + str(date.today() - timedelta(days=1)) + ')',
                             ),
                             ),
                         ]
